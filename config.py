@@ -1,5 +1,3 @@
-import os
-import time
 class Hyper:
     UseUserLocation = False
     MustTranslate = False
