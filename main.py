@@ -29,7 +29,7 @@ def combine_files_for_each_language():
     Helper.printline("     ** Started: Combine files for each language")
     os.chdir(Hyper.HyrdatedTweetLangDir)
     Helper.printline(f"Changed directory to {Hyper.HyrdatedTweetLangDir}")
-    list_dirs = os.listdir()
+    list_dirs = Helper.listfolders()
     list_dirs.remove("no_country")
     big_df = pd.concat( [pd.read_csv(os.path.join(_dir, Hyper.HyrdatedTweetFile)) for _dir in list_dirs]) 
     big_df.to_csv(Hyper.HyrdatedTweetLangFile)
