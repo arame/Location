@@ -5,12 +5,9 @@ from user_location import UserLocation
 from helper import Helper
 
 def main():
-    calculate_country_from_user_location()
-    combine_files_for_each_language()
-
-def calculate_country_from_user_location():
     Helper.printline("     ** Started: Caculate country from User Location")
     file = os.path.join(Hyper.HyrdatedTweetDirNoCountry, Hyper.HyrdatedTweetFile)
+    Helper.remove_duplicates(Hyper.UserLocationFile)
     i = 0
     ul = UserLocation()
     with open(file, encoding="utf-8", newline='') as csvfile:
@@ -22,19 +19,8 @@ def calculate_country_from_user_location():
             if i % 100 == 0:
                 Helper.printline(f"     {i} rows processed")
 
+    Helper.remove_duplicates(Hyper.UserLocationFile)
     Helper.printline(f"     ** Ended: Caculate country from User Location")
-
-def combine_files_for_each_language():
-    # Join all the tweet files for each country into one file for the langauage
-    Helper.printline("     ** Started: Combine files for each language")
-    os.chdir(Hyper.HyrdatedTweetLangDir)
-    Helper.printline(f"Changed directory to {Hyper.HyrdatedTweetLangDir}")
-    list_dirs = Helper.listfolders()
-    list_dirs.remove("no_country")
-    big_df = pd.concat( [pd.read_csv(os.path.join(_dir, Hyper.HyrdatedTweetFile)) for _dir in list_dirs]) 
-    big_df.to_csv(Hyper.HyrdatedTweetLangFile)
-
-    Helper.printline(f"     ** Ended: Combine files for each language")
 
 def output_row(ul, row):
     user_location = row["User Location"].strip()
