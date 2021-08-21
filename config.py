@@ -1,3 +1,5 @@
+import re
+
 class Hyper:
     UseUserLocation = False
     MustTranslate = False
@@ -17,4 +19,6 @@ class Hyper:
         self.dirOutput = f"../Summary_Details_files{Hyper._time}"
         self.IsOutputCsv = True
 
- 
+class Constants:
+    USER_HANDLES_REGEX = re.compile(r"@\S+")
+    NEW_LINE = re.compile(r'\s+|\\n')
