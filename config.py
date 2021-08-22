@@ -13,6 +13,8 @@ class Hyper:
     HyrdatedTweetLangFile = f"{language}_tweets.csv"
     no_language_cnt = 0
     tweet_saved_cnt = 0
+    is_country = False
+    is_sentiment = True
     field_names = ['Id', 'Language', 'Place', 'User Location', 'Country', 'Full Text', 'clean_text', 'Retweet Count', 'Favourite Count']
     
     def __init__(self) -> None:

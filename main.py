@@ -7,8 +7,10 @@ from sentiment import Sentiment
 
 def main():
     Helper.printline("** Location Started\n")
-    calculate_country_from_User_Location()
-    calculate_sentiment()
+    if Hyper.is_country:
+        calculate_country_from_User_Location()
+    if Hyper.is_sentiment:
+        calculate_sentiment()
     Helper.printline("\n** Location Ended")
 
 def calculate_country_from_User_Location():
