@@ -23,4 +23,4 @@ class Hyper:
 
 class Constants:
     USER_HANDLES_REGEX = re.compile(r"@\S+")
-    NEW_LINE = re.compile(r'\s+|\\n')
+    NEW_LINE_REGEX = re.compile(r'\s+|\\n')
