@@ -14,7 +14,7 @@ class Hyper:
     no_language_cnt = 0
     tweet_saved_cnt = 0
     is_country = False
-    is_sentiment = True
+    is_sentiment = False
     field_names = ['Id', 'Language', 'Place', 'User Location', 'Country', 'Full Text', 'clean_text', 'Retweet Count', 'Favourite Count']
     
     def __init__(self) -> None:

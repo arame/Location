@@ -11,6 +11,9 @@ def main():
         calculate_country_from_User_Location()
     if Hyper.is_sentiment:
         calculate_sentiment()
+        
+    remove_neutral_sentiments()    
+    
     Helper.printline("\n** Location Ended")
 
 def calculate_country_from_User_Location():
@@ -77,6 +80,7 @@ def calculate_sentiment():
         lockdown_perc = Helper.get_perc(sum(sent.is_lockdown), len(csv_input))
         Helper.printline(f"Number of lockdown comments are {sum(sent.is_lockdown)}, {lockdown_perc}%")
     
+    os.chdir(curr_dir)
     Helper.printline("    Finished Sentiment calculation")
 
 def insert_new_columns(csv_input):
@@ -89,12 +93,14 @@ def insert_new_columns(csv_input):
     insert_column(csv_input, "s_pos", 0.0)
 
 def insert_column(csv_input, col_name, _default):
+    if col_name in csv_input.columns:
+        return
+    
     column_position = 7
     column_title = col_name
     csv_input.insert(column_position, column_title, _default)
 
 def save_csv(csv_input, sent, file):
-    #df = DataFrame()
     csv_input["clean_text"] = sent.clean_text
     csv_input["s_pos"] = sent.pos
     csv_input["s_neu"] = sent.neu
@@ -103,13 +109,36 @@ def save_csv(csv_input, sent, file):
     csv_input["sentiment"] = sent.sent
     csv_input["is_facemask"] = sent.is_facemask
     csv_input["is_lockdown"] = sent.is_lockdown
-    csv_input.to_csv(file) 
+    csv_input.to_csv(file, index=False) 
     
 def get_country_dir(i, country):
     if i == 1:
         return country
     
     return f"../{country}"
+
+def remove_neutral_sentiments():
+    dir = Hyper.HyrdatedTweetLangDir
+    os.chdir(dir)
+    list_dirs = Helper.list_country_folders()
+    i = 0
+    Helper.printline(f"Iterate through {len(list_dirs)} countries")
+    for country in list_dirs:
+        i += 1
+        country_dir = get_country_dir(i, country)
+        os.chdir(country_dir)
+        file = Hyper.HyrdatedTweetFile
+        remove_neutral_sentment_per_country(country, file) 
+
+def remove_neutral_sentment_per_country(country, file):
+    csv_input = pd.read_csv(file, sep=',', error_bad_lines=False, index_col=False, dtype='unicode')
+    csv_input = csv_input.drop_duplicates()     # remove duplicate tweets 
+    no_rows = csv_input.shape[0]
+    Helper.printline(f"Country: {country}. Number of rows BEFORE deleting neutral sentiment tweets {no_rows}") 
+    df = csv_input[csv_input['sentiment'] < '9']
+    no_rows = df.shape[0]
+    Helper.printline(f"Country: {country}. Number of rows AFTER deleting neutral sentiment tweets {no_rows}")
+    df.to_csv(file, index=False)         
 
 if __name__ == "__main__":
     main()
