@@ -72,7 +72,6 @@ def calculate_sentiment():
         csv_input = csv_input.drop_duplicates()     # remove duplicate tweets
         sent.get(csv_input)
         insert_new_columns(csv_input)
-        csv_input.query(f'sentiment != {sent.NEUTRAL}', inplace = True)
         save_csv(csv_input, sent, Hyper.HyrdatedTweetFile)
         Helper.printline(f"Country: {i}. {country} saving {len(csv_input)} entries")
         facemask_perc = Helper.get_perc(sum(sent.is_facemask), len(csv_input))

@@ -1,6 +1,6 @@
 from helper import Helper
 from geopy.geocoders import Nominatim
-import csv, os
+import csv, os, re
 import pandas as pd
 from csv import writer
 from csv import DictWriter
@@ -32,6 +32,10 @@ class UserLocation:
         if user_location == None:
             return ""
 
+        temp = re.sub("[^a-zA-Z]+", "", user_location)
+        if len(temp) < 2:
+            return ""
+        
         if user_location in self.user_locations:
             country = self.user_locations[user_location]
             return country

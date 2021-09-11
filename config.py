@@ -3,7 +3,7 @@ import re
 class Hyper:
     UseUserLocation = False
     MustTranslate = False
-    _time = "2021_08_18 10_54_32"
+    _time = "2021_09_03A20_50_58"
     language = "en"
     UserLocationFile = "../Lookup/UserLocations.csv"
     HyrdatedTweetDirNoCountry = f"../Summary_Details_files{_time}/{language}/no_country"
@@ -13,8 +13,8 @@ class Hyper:
     HyrdatedTweetLangFile = f"{language}_tweets.csv"
     no_language_cnt = 0
     tweet_saved_cnt = 0
-    is_country = False
-    is_sentiment = False
+    is_country = True
+    is_sentiment = True
     field_names = ['Id', 'Language', 'Place', 'User Location', 'Country', 'Full Text', 'clean_text', 'Retweet Count', 'Favourite Count']
     
     def __init__(self) -> None:
