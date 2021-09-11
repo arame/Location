@@ -36,6 +36,21 @@ class UserLocation:
         if len(temp) < 2:
             return ""
         
+        if "#name" in user_location.lower():
+            return ""
+        
+        if "#value" in user_location.lower():
+            return ""
+        
+        if "n/a" in user_location.lower():
+            return ""
+        
+        if " null " in user_location.lower():
+            return ""
+        
+        if " false " in user_location.lower():
+            return ""
+        
         if user_location in self.user_locations:
             country = self.user_locations[user_location]
             return country
