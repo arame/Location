@@ -5,6 +5,15 @@ from user_location import UserLocation
 from helper import Helper
 from sentiment import Sentiment
 
+'''
+    This program is the second in a suite of programs to be executed in this order
+    1/ App - gets tweets from Twitter API
+    2/ Location - gets the country of the tweet from user location
+    3/ Annotate - calculates the sentiment of each tweet
+    4/ Wordcload - shows the words most in use in tweets from different countries
+    5/ Datapreparation - gets the data in the correct form
+    6/ Transformer - builds a transformer model from the tweets
+'''
 def main():
     Helper.printline("** Location Started\n")
     if Hyper.is_country:
@@ -43,7 +52,7 @@ def output_row(ul, row):
         return # ignore invalid user locations
 
     country = ul.locator(user_location)
-    if len(country) == 0:
+    if len(country) == 0 or len(country) > 50:
         return  # Ignore, no country to save
 
     row["Country"] = country

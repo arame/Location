@@ -31,3 +31,8 @@ class Helper:
             return 0
             
         return round((float(count) / float(total)) * 100, 2)
+    
+    def remove_non_ascii_characters(string_unicode):
+        string_encode = string_unicode.encode("ascii", "ignore")
+        string_decode = string_encode.decode()
+        return string_decode

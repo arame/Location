@@ -51,13 +51,14 @@ class UserLocation:
         if " false " in user_location.lower():
             return ""
         
+        get_country = lambda country: "" if len(country) > 50 else country
         if user_location in self.user_locations:
             country = self.user_locations[user_location]
-            return country
+            return get_country(country)
 
         country = self.geo_locator(user_location)
         self.save_user_location(user_location, country)
-        return country
+        return get_country(country)
 
     def geo_locator(self, user_location):
         try :
@@ -69,6 +70,7 @@ class UserLocation:
             # get country codes
             c_code = location_exact.raw['address']['country_code']
             country = location_exact.raw['address']['country']
+            country = Helper.remove_non_ascii_characters(country)
             return country
 
         except:
@@ -96,7 +98,7 @@ class UserLocation:
 
 
     def change_working_directory(self, folder):
-        # Replace invalid characters for folder name with underbar.
+
         if not os.path.exists(folder):
             os.makedirs(folder)
 
